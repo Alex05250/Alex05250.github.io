@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>Daily · 每日分享 · Baibuye BioInfo Playground</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Baibuye 的每日分享：学习碎片、灵感与小感悟" />
+  <style>
+    :root { --bg:#f5f5f7;--bg-elevated:#fff;--text:#1d1d1f;--muted:#6e6e73;--accent:#0071e3;--accent-soft:rgba(0,113,227,.09);--radius-lg:26px;--radius-md:18px;--shadow-soft:0 24px 60px rgba(0,0,0,.08);--border-subtle:rgba(0,0,0,.05);}
+    *{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui,-system-ui,"Segoe UI",sans-serif;background:radial-gradient(circle at top left,#fff 0,#f5f5f7 45%,#ececf1 100%);color:var(--text);line-height:1.6;}
+    .nav{position:sticky;top:0;z-index:20;backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);background:linear-gradient(to bottom,rgba(245,245,247,.9),rgba(245,245,247,.75),rgba(245,245,247,.3));border-bottom:1px solid rgba(0,0,0,.06);}
+    .nav-inner{max-width:1080px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px;}
+    .nav-brand{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;}
+    .nav-dot{width:18px;height:18px;border-radius:999px;background:radial-gradient(circle at 30% 20%,#fff 0,#c8e3ff 35%,#0071e3 100%);box-shadow:0 0 0 1px rgba(0,113,227,.4),0 8px 24px rgba(0,113,227,.4);}
+    .nav-links{display:flex;gap:18px;font-size:14px;align-items:center;}
+    .nav-links a{text-decoration:none;color:var(--muted);padding:6px 10px;border-radius:999px;transition:color .18s ease,background-color .18s ease,transform .12s ease;}
+    .nav-links a:hover{color:var(--text);background:rgba(0,0,0,.03);transform:translateY(-1px);}
+    .nav-cta{padding:7px 14px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-size:12px;border:1px solid rgba(0,113,227,.18);white-space:nowrap;}
+    .section{max-width:1080px;margin:0 auto;padding:40px 20px 64px;}
+    .section-title{font-size:24px;font-weight:650;letter-spacing:-.02em;margin-bottom:6px;}
+    .section-subtitle{font-size:14px;color:var(--muted);max-width:520px;margin-bottom:24px;}
+    .notes-list{display:flex;flex-direction:column;gap:14px;}
+    .note-card{border-radius:18px;background:rgba(255,255,255,.96);border:1px solid var(--border-subtle);box-shadow:0 14px 32px rgba(0,0,0,.05);padding:14px 14px 12px;}
+    .note-meta{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:4px;font-size:11px;color:var(--muted);}
+    .note-date{font-weight:600;}
+    .note-tag{font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:var(--muted);}
+    .note-text{font-size:13px;color:var(--text);}
+    .footer{max-width:1080px;margin:0 auto;padding:24px 20px 32px;font-size:12px;color:var(--muted);display:flex;justify-content:space-between;gap:12px;border-top:1px solid rgba(0,0,0,.06);}
+    @media (max-width:600px){
+      .nav-inner{padding-inline:14px;}
+      .nav-links{display:none;}
+      .section{padding-inline:14px;}
+    }
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="nav-inner">
+      <div class="nav-brand">
+        <div class="nav-dot"></div>
+        <span>Baibuye · BioInfo Playground</span>
+      </div>
+      <nav class="nav-links">
+        <a href="index.html#home">Home</a>
+        <a href="index.html#overview">Overview</a>
+        <a href="tools.html">Tools</a>
+        <a href="lab.html">Lab &amp; Projects</a>
+        <a href="daily.html">Daily</a>
+      </nav>
+      <div class="nav-cta">daily · notes</div>
+    </div>
+  </header>
+
+  <main class="section">
+    <h1 class="section-title">Daily · 每日分享</h1>
+    <p class="section-subtitle">
+      这里放一些轻量的记录：课堂上的小发现、今天学到的一个概念、突然冒出来的句子。
+      不用很正式，但可以帮助未来的自己回想起当时的心情和进度。
+    </p>
+
+    <section class="notes-list">
+      <!-- 示例 1 -->
+      <article class="note-card">
+        <div class="note-meta">
+          <span class="note-date">2025-11-30</span>
+          <span class="note-tag">BIO · NOTE</span>
+        </div>
+        <p class="note-text">
+          今天第一次把自己的 C++ 小程序搬到网页上，突然有一种“自己的实验室
+          真的开始上线”的感觉。以后可以慢慢把 SDS-PAGE、酶活力这些实验的要点
+          写成一小段文字贴在这里。
+        </p>
+      </article>
+
+      <!-- 示例 2 -->
+      <article class="note-card">
+        <div class="note-meta">
+          <span class="note-date">2025-11-30</span>
+          <span class="note-tag">CODE · MOMENT</span>
+        </div>
+        <p class="note-text">
+          进制互转这个工具本质上就是 bitset 的一个小壳子，但做成网页版本之后，
+          好像更容易被“拿来用”，也更容易向别人展示：“这是我写的”。
+        </p>
+      </article>
+
+      <!-- 示例 3 -->
+      <article class="note-card">
+        <div class="note-meta">
+          <span class="note-date">2025-11-30</span>
+          <span class="note-tag">LIFE</span>
+        </div>
+        <p class="note-text">
+          在搭这个网站的时候突然意识到：很多东西并不需要一开始就完美，
+          重要的是它真的存在，然后可以一点点变好。
+        </p>
+      </article>
+
+      <!--
+        开发者提示：
+        以后要新增一条每日分享，把上面的整块
+        <article class="note-card"> ... </article>
+        复制一份，改日期 / 标签 / 文本即可。
+      -->
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div>© <span id="year"></span> Baibuye · BioInfo Playground</div>
+    <div>Daily 页面 · 记录那些“小但真实”的瞬间</div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
