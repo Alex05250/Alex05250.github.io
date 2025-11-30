@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>Tools · Baibuye BioInfo Playground</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Baibuye 的小工具：DNA 序列分析、进制互转等" />
+  <!-- 直接复用首页的 CSS，方便保持统一风格 -->
+  <style>
+    /* == 把首页 index 的 CSS 复用过来（略同，不再解释） == */
+    :root { --bg:#f5f5f7;--bg-elevated:#fff;--text:#1d1d1f;--muted:#6e6e73;--accent:#0071e3;--accent-soft:rgba(0,113,227,.09);--radius-lg:26px;--radius-md:18px;--shadow-soft:0 24px 60px rgba(0,0,0,.08);--border-subtle:rgba(0,0,0,.05);}
+    *{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui,-system-ui,"Segoe UI",sans-serif;background:radial-gradient(circle at top left,#fff 0,#f5f5f7 45%,#ececf1 100%);color:var(--text);line-height:1.6;}
+    .nav{position:sticky;top:0;z-index:20;backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);background:linear-gradient(to bottom,rgba(245,245,247,.9),rgba(245,245,247,.75),rgba(245,245,247,.3));border-bottom:1px solid rgba(0,0,0,.06);}
+    .nav-inner{max-width:1080px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px;}
+    .nav-brand{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;}
+    .nav-dot{width:18px;height:18px;border-radius:999px;background:radial-gradient(circle at 30% 20%,#fff 0,#c8e3ff 35%,#0071e3 100%);box-shadow:0 0 0 1px rgba(0,113,227,.4),0 8px 24px rgba(0,113,227,.4);}
+    .nav-links{display:flex;gap:18px;font-size:14px;align-items:center;}
+    .nav-links a{text-decoration:none;color:var(--muted);padding:6px 10px;border-radius:999px;transition:color .18s ease,background-color .18s ease,transform .12s ease;}
+    .nav-links a:hover{color:var(--text);background:rgba(0,0,0,.03);transform:translateY(-1px);}
+    .nav-cta{padding:7px 14px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-size:12px;border:1px solid rgba(0,113,227,.18);white-space:nowrap;}
+    .section{max-width:1080px;margin:0 auto;padding:40px 20px 64px;}
+    .section-title{font-size:24px;font-weight:650;letter-spacing:-.02em;margin-bottom:6px;}
+    .section-subtitle{font-size:14px;color:var(--muted);max-width:520px;margin-bottom:24px;}
+    .tool-block{border-radius:22px;background:rgba(255,255,255,.96);border:1px solid var(--border-subtle);box-shadow:0 18px 40px rgba(0,0,0,.06);padding:18px 18px 16px;margin-bottom:20px;}
+    .tool-header{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:8px;}
+    .tool-title{font-size:16px;font-weight:600;}
+    .tool-kicker{font-size:11px;text-transform:uppercase;letter-spacing:.18em;color:var(--muted);}
+    .tool-intro{font-size:13px;color:var(--muted);margin-bottom:10px;}
+    .tool-panel{display:flex;flex-direction:column;gap:8px;font-size:13px;color:var(--muted);}
+    .tool-panel textarea,
+    .tool-panel input,
+    .tool-panel select{border-radius:14px;border:1px solid rgba(0,0,0,.12);padding:8px 10px;font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;font-size:12px;outline:none;}
+    .tool-panel input,
+    .tool-panel select{font-family:inherit;font-size:13px;border-radius:10px;}
+    .tool-panel textarea:focus,
+    .tool-panel input:focus,
+    .tool-panel select:focus{border-color:rgba(0,113,227,.7);box-shadow:0 0 0 1px rgba(0,113,227,.45);}
+    .tool-footer{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--muted);margin-top:4px;}
+    .btn{border:none;cursor:pointer;font-size:13px;border-radius:999px;padding:7px 16px;display:inline-flex;align-items:center;gap:6px;transition:transform .12s ease,box-shadow .18s ease,background .18s ease,color .18s ease,border-color .18s ease;text-decoration:none;}
+    .btn-primary{background:linear-gradient(135deg,#0077ed,#0b84ff);color:#fff;box-shadow:0 12px 30px rgba(0,122,255,.35);}
+    .btn-primary:hover{transform:translateY(-1px);box-shadow:0 16px 40px rgba(0,122,255,.42);}
+    .result-box{margin-top:4px;border-radius:14px;background:rgba(245,245,247,.9);border:1px solid rgba(0,0,0,.04);padding:8px 10px;font-size:12px;max-height:160px;overflow-y:auto;white-space:pre-line;}
+    .result-box strong{color:var(--text);}
+    .message{font-size:11px;color:#d70015;min-height:14px;}
+    .footer{max-width:1080px;margin:0 auto;padding:24px 20px 32px;font-size:12px;color:var(--muted);display:flex;justify-content:space-between;gap:12px;border-top:1px solid rgba(0,0,0,.06);}
+    @media (max-width:600px){
+      .nav-inner{padding-inline:14px;}
+      .nav-links{display:none;}
+      .section{padding-inline:14px;}
+    }
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="nav-inner">
+      <div class="nav-brand">
+        <div class="nav-dot"></div>
+        <span>Baibuye · BioInfo Playground</span>
+      </div>
+      <nav class="nav-links">
+        <a href="index.html#home">Home</a>
+        <a href="index.html#overview">Overview</a>
+        <a href="tools.html">Tools</a>
+        <a href="lab.html">Lab &amp; Projects</a>
+      </nav>
+      <div class="nav-cta">tools · dna · base</div>
+    </div>
+  </header>
+
+  <main class="section">
+    <h1 class="section-title">Tools · 小工具</h1>
+    <p class="section-subtitle">
+      这里收集一些我自己写的小程序：先从 DNA 序列简单分析、十进制 ↔ 二进制互转开始。
+      以后每新增一个工具，只需要复制下面其中一块 <code>.tool-block</code>，改标题和内容即可。
+    </p>
+
+    <!-- 工具 1：DNA 序列分析 -->
+    <section class="tool-block">
+      <div class="tool-header">
+        <div>
+          <div class="tool-kicker">DNA TOOL</div>
+          <div class="tool-title">DNA 序列简单分析</div>
+        </div>
+        <span style="font-size:11px;color:var(--muted);">本地计算 · 不会上传数据</span>
+      </div>
+      <p class="tool-intro">
+        输入一段 DNA 序列（支持 A / T / G / C / N），自动统计长度、碱基数量和 GC 含量。
+        会自动忽略空格和换行，对非法字符给出提醒。
+      </p>
+      <form class="tool-panel" id="dna-form">
+        <label for="dna-input">在此粘贴 DNA 序列：</label>
+        <textarea id="dna-input" placeholder="例如：&#10;ATGCGTACGTTAGC..."></textarea>
+        <div class="message" id="dna-message"></div>
+        <div class="result-box" id="dna-result">
+          结果会显示在这里：序列长度、A/T/G/C/N 计数，以及 GC 含量。
+        </div>
+        <div class="tool-footer">
+          <span>小提示：可以直接从 FASTA 文件中复制序列主体贴过来。</span>
+          <button type="submit" class="btn btn-primary">分析序列</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- 工具 2：进制互转 -->
+    <section class="tool-block">
+      <div class="tool-header">
+        <div>
+          <div class="tool-kicker">C++ ORIGIN</div>
+          <div class="tool-title">进制互转 · 十进制 ↔ 二进制</div>
+        </div>
+        <span style="font-size:11px;color:var(--muted);">灵感来自早期 C++ 小程序</span>
+      </div>
+      <p class="tool-intro">
+        支持 0–4095 的十进制与 12 位二进制表示之间互转，逻辑对应你当初写的
+        <code>std::bitset&lt;12&gt;</code> 程序。
+        如果你在仓库里放了 <code>base_converter.cpp</code>，也可以在这里附上“查看原始 C++ 实现”的链接。
+      </p>
+      <form class="tool-panel" id="base-form">
+        <label for="base-mode">选择转换方向：</label>
+        <select id="base-mode">
+          <option value="10to2">十进制 → 二进制（12 位 bitset）</option>
+          <option value="2to10">二进制 → 十进制（最长 12 位）</option>
+        </select>
+
+        <label for="base-input">输入数值：</label>
+        <input id="base-input" type="text" placeholder="例如：42 或 101010" />
+
+        <div class="message" id="base-message"></div>
+        <div class="result-box" id="base-result">
+          在这里会看到转换结果：十进制数值和 12 位二进制表示。
+        </div>
+        <div class="tool-footer">
+          <span>范围：0–4095；二进制仅允许 0 / 1，长度不超过 12 位。</span>
+          <button type="submit" class="btn btn-primary">开始转换</button>
+        </div>
+      </form>
+      <!-- 如果你上传了 base_converter.cpp，可以把下面这一行取消注释并改成你的链接 -->
+      <!-- <p style="font-size:11px;color:var(--muted);margin-top:6px;">
+        原始 C++ 实现：<a href="https://github.com/你的用户名/你的仓库名/blob/main/base_converter.cpp" target="_blank">查看源码</a>
+      </p> -->
+    </section>
+
+    <!-- 以后新增工具：复制这一块 tool-block，改标题和内容就可以 -->
+    <!--
+    <section class="tool-block">
+      ... 新工具 ...
+    </section>
+    -->
+  </main>
+
+  <footer class="footer">
+    <div>© <span id="year"></span> Baibuye · BioInfo Playground</div>
+    <div>Tools 页面 · 欢迎随时扩展新工具</div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // DNA 工具逻辑
+    const dnaForm = document.getElementById("dna-form");
+    const dnaInput = document.getElementById("dna-input");
+    const dnaMessage = document.getElementById("dna-message");
+    const dnaResult = document.getElementById("dna-result");
+
+    if (dnaForm) {
+      dnaForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const raw = (dnaInput.value || "").trim();
+
+        dnaMessage.textContent = "";
+        if (!raw) {
+          dnaMessage.textContent = "请先粘贴一段 DNA 序列。";
+          dnaResult.textContent = "未检测到有效序列。";
+          return;
+        }
+
+        const cleaned = raw.toUpperCase().replace(/[\s\r\n\t]/g, "");
+        if (!cleaned) {
+          dnaMessage.textContent = "清理空白字符后没有剩余内容，请检查输入。";
+          dnaResult.textContent = "未检测到有效序列。";
+          return;
+        }
+
+        const invalidMatch = cleaned.match(/[^ACGTN]/g);
+        if (invalidMatch) {
+          const uniqueInvalid = [...new Set(invalidMatch)].join("、");
+          dnaMessage.textContent =
+            "提示：序列中包含非 A/T/G/C/N 字符（例如：" +
+            uniqueInvalid +
+            "），这些字符将被忽略后再计算。";
+        } else {
+          dnaMessage.textContent = "";
+        }
+
+        const seq = cleaned.replace(/[^ACGTN]/g, "");
+        const length = seq.length;
+        if (!length) {
+          dnaResult.textContent =
+            "所有字符都是无效符号，未能得到合法的 A/T/G/C/N 碱基。";
+          return;
+        }
+
+        const counts = { A: 0, T: 0, G: 0, C: 0, N: 0 };
+        for (const base of seq) {
+          if (counts.hasOwnProperty(base)) counts[base] += 1;
+        }
+
+        const gcCount = counts.G + counts.C;
+        const gcPercent = ((gcCount / length) * 100).toFixed(2);
+
+        dnaResult.innerHTML =
+          "<strong>有效序列长度：</strong>" +
+          length +
+          " bp\n" +
+          "<strong>碱基计数：</strong>\n" +
+          "A: " +
+          counts.A +
+          "    T: " +
+          counts.T +
+          "    G: " +
+          counts.G +
+          "    C: " +
+          counts.C +
+          "    N: " +
+          counts.N +
+          "\n" +
+          "<strong>GC 含量：</strong>" +
+          gcPercent +
+          " % （按 G+C / 全部有效碱基 计算）";
+      });
+    }
+
+    // 进制互转逻辑（照你的 C++ 思路）
+    const baseForm = document.getElementById("base-form");
+    const baseMode = document.getElementById("base-mode");
+    const baseInput = document.getElementById("base-input");
+    const baseMessage = document.getElementById("base-message");
+    const baseResult = document.getElementById("base-result");
+
+    if (baseForm) {
+      baseForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const mode = baseMode.value;
+        const raw = (baseInput.value || "").trim();
+
+        baseMessage.textContent = "";
+        if (!raw) {
+          baseMessage.textContent = "请先输入要转换的数值。";
+          baseResult.textContent = "未检测到有效输入。";
+          return;
+        }
+
+        if (mode === "10to2") {
+          let n = Number(raw);
+          if (!Number.isFinite(n) || !Number.isInteger(n)) {
+            baseMessage.textContent = "请输入一个合法的十进制整数。";
+            baseResult.textContent = "输入无效。";
+            return;
+          }
+          n = Math.abs(n);
+          if (n > 4095) {
+            baseMessage.textContent = "超过计算范围！允许范围为 0–4095。";
+            baseResult.textContent = "超过 12 位 bitset 的范围。";
+            return;
+          }
+          const bin = n.toString(2).padStart(12, "0");
+          baseResult.textContent =
+            "十进制： " +
+            n +
+            "\n12 位二进制： " +
+            bin +
+            "\n\n说明：使用 12 位 bitset 表示（对应当初的 C++ 实现）。";
+        } else {
+          const cleaned = raw.replace(/\s+/g, "");
+          if (!/^[01]+$/.test(cleaned)) {
+            baseMessage.textContent = "二进制只允许包含 0 和 1。";
+            baseResult.textContent = "输入无效。";
+            return;
+          }
+          if (cleaned.length > 12) {
+            baseMessage.textContent = "超过计算范围！最长支持 12 位二进制。";
+            baseResult.textContent = "请缩短为 12 位以内。";
+            return;
+          }
+          const dec = parseInt(cleaned, 2);
+          baseResult.textContent =
+            "二进制： " +
+            cleaned +
+            "\n十进制： " +
+            dec +
+            "\n\n说明：将二进制视作 12 位 bitset 的一部分进行转换。";
+        }
+      });
+    }
+  </script>
+</body>
+</html>
