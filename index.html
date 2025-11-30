@@ -313,6 +313,15 @@
       color: #0060cc;
     }
 
+    a.pill {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    a.pill:hover {
+      color: var(--text);
+    }
+
     .hero-card-footer {
       display: flex;
       justify-content: space-between;
@@ -469,6 +478,7 @@
         <a href="#overview">Overview</a>
         <a href="tools.html">Tools</a>
         <a href="lab.html">Lab &amp; Projects</a>
+        <a href="daily.html">Daily</a>
       </nav>
       <div class="nav-cta">student · bio · code</div>
     </div>
@@ -487,7 +497,7 @@
           个人学习实验室。
         </h1>
         <p class="hero-text">
-          这里会慢慢收集我的生物实验、编程练习、生物学习知识，
+          这里会慢慢收集我的生物实验、C++ / Python 练习、生物学习记录，
           还有一些对世界的好奇与思考。它不会一次成型，而是和我一起持续演化。
         </p>
         <div class="hero-actions">
@@ -499,7 +509,7 @@
           </a>
         </div>
         <div class="hero-meta">
-          目前关注： 生物课程相关 · C++ 基础 · Python 实战 ·
+          目前关注： 生物实验 · C++ 基础 · Python 实战 ·
           生物信息工程师路线
         </div>
       </div>
@@ -513,18 +523,17 @@
             连接 <strong>生物学</strong> 与 <strong>编程</strong> 的小桥。
           </div>
           <div class="hero-card-pillrow">
-  <a
-    class="pill pill-strong"
-    href="https://www.learncpp.com"
-    target="_blank"
-    rel="noopener noreferrer"
-  >
-    C++ from learncpp.com
-  </a>
-  <span class="pill">Python · 实战脚本</span>
-  <span class="pill">生物实验</span>
-  <span class="pill">知识库 · 长期建设</span>
-</div>
+            <a
+              class="pill pill-strong"
+              href="https://www.learncpp.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              C++ from learncpp.com
+            </a>
+            <span class="pill">Python · 实战脚本</span>
+            <span class="pill">生物实验</span>
+            <span class="pill">知识库 · 长期建设</span>
           </div>
           <div class="hero-card-footer">
             <div style="display: flex; align-items: center; gap: 6px;">
@@ -545,15 +554,15 @@
         <h2 class="section-title">Overview · 总览</h2>
         <p class="section-subtitle">
           用三个简单的板块，把日常的思考、实用的小工具、
-          和真正做过的实验 & 项目串在一起。以后如果需要，可以再把它们拆成独立页面。
+          和真正做过的实验 &amp; 项目串在一起。
         </p>
       </div>
     </div>
     <div class="grid">
-      <!-- 每日分享 -->
-      <a class="card-link" href="lab.html#notes">
+      <!-- 每日分享卡片 -->
+      <a class="card-link" href="daily.html">
         <article class="card">
-          <div class="card-kicker">planned</div>
+          <div class="card-kicker">daily</div>
           <h3 class="card-title">每日分享 · Daily Notes</h3>
           <p class="card-text">
             用很短的篇幅记录一些灵感、读到的句子、课堂上的小发现，
@@ -561,15 +570,15 @@
           </p>
           <div class="card-meta">
             <span>形式：一两段文字 / 一张图</span>
-            <span>位置：Lab &amp; Projects 页面</span>
+            <span>位置：Daily 页面</span>
           </div>
         </article>
       </a>
 
-      <!-- 小工具 -->
+      <!-- 小工具卡片 -->
       <a class="card-link" href="tools.html">
         <article class="card">
-          <div class="card-kicker">beta</div>
+          <div class="card-kicker">tools</div>
           <h3 class="card-title">小工具 · Bio Tools</h3>
           <p class="card-text">
             把自己写过或正在写的实用脚本慢慢搬上来：DNA 序列分析、进制互转，
@@ -582,13 +591,13 @@
         </article>
       </a>
 
-      <!-- 实验 & 项目 -->
+      <!-- 实验 & 项目卡片 -->
       <a class="card-link" href="lab.html">
         <article class="card">
-          <div class="card-kicker">planned</div>
-          <h3 class="card-title">实验 & 项目 · Lab &amp; Projects</h3>
+          <div class="card-kicker">lab</div>
+          <h3 class="card-title">实验 &amp; 项目 · Lab &amp; Projects</h3>
           <p class="card-text">
-            记录真正做过的事情：SDS-PAGE测定蛋白质实验、DNS法还原糖实验、
+            记录真正做过的事情：过氧化氢酶活力测定、DNS 法还原糖实验、
             草麻黄中麻黄碱的提取，和一些小型生信或创意项目。
           </p>
           <div class="card-meta">
