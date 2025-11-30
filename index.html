@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <title>Baibuye · BioInfo Playground</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Baibuye 的个人主页" />
+  <meta name="description" content="Baibuye 的个人生信与学习小实验室" />
   <style>
     :root {
       --bg: #f5f5f7;
@@ -392,6 +392,134 @@
       color: var(--muted);
     }
 
+    /* 工具弹窗 */
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.25);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 40;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal {
+      width: min(560px, 94vw);
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      box-shadow: 0 28px 80px rgba(0, 0, 0, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.95);
+      padding: 18px 20px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .modal-title {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .modal-subtitle {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .modal-close {
+      border: none;
+      border-radius: 999px;
+      width: 26px;
+      height: 26px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.04);
+      cursor: pointer;
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .modal-close:hover {
+      background: rgba(0, 0, 0, 0.08);
+    }
+
+    .modal-body {
+      font-size: 13px;
+      color: var(--muted);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .modal-body textarea {
+      width: 100%;
+      min-height: 120px;
+      resize: vertical;
+      border-radius: 14px;
+      border: 1px solid rgba(0, 0, 0, 0.12);
+      padding: 8px 10px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+        "Liberation Mono", "Courier New", monospace;
+      font-size: 12px;
+      outline: none;
+    }
+
+    .modal-body textarea:focus {
+      border-color: rgba(0, 113, 227, 0.7);
+      box-shadow: 0 0 0 1px rgba(0, 113, 227, 0.45);
+    }
+
+    .modal-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 6px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .modal-footer .btn-primary {
+      font-size: 13px;
+      padding-inline: 14px;
+    }
+
+    .result-box {
+      margin-top: 4px;
+      border-radius: 14px;
+      background: rgba(245, 245, 247, 0.9);
+      border: 1px solid rgba(0, 0, 0, 0.04);
+      padding: 8px 10px;
+      font-size: 12px;
+      max-height: 150px;
+      overflow-y: auto;
+      white-space: pre-line;
+    }
+
+    .result-box strong {
+      color: var(--text);
+    }
+
+    .message {
+      font-size: 11px;
+      color: #d70015;
+      min-height: 14px;
+    }
+
     /* Footer */
 
     .footer {
@@ -481,10 +609,10 @@
         </div>
         <h1 class="hero-title">
           一个属于 <span class="accent">Baibuye</span> 的<br />
-          个人主页。
+          个人学习主页。
         </h1>
         <p class="hero-text">
-          这里会慢慢收集我的生物实验、编程练习项目、生物信息学知识，
+          这里会慢慢收集我的生物实验、C++ / Python 练习、生物信息学踩坑记录，
           还有一些对世界的好奇与思考。它不会一次成型，而是和我一起持续演化。
         </p>
         <div class="hero-actions">
@@ -496,7 +624,7 @@
           </a>
         </div>
         <div class="hero-meta">
-          目前关注：生化实验· C++ 基础 · Python 实战 ·
+          目前关注： 生物实验 · C++ 基础 · Python 实战 ·
           生物信息工程师路线
         </div>
       </div>
@@ -520,14 +648,14 @@
               <span class="hero-card-dot"></span>
               <span>status: online · always learning</span>
             </div>
-            <span>v0.1 · 还在不断迭代中</span>
+            <span>v0.2 · with DNA tool</span>
           </div>
         </div>
       </div>
     </section>
   </main>
 
-  <!-- Overview 区（原 Tools 区） -->
+  <!-- Overview 区 -->
   <section id="overview" class="section">
     <div class="section-header">
       <div>
@@ -554,16 +682,16 @@
       </article>
 
       <!-- 小工具 -->
-      <article class="card">
-        <div class="card-kicker">planned</div>
+      <article class="card" id="tool-card">
+        <div class="card-kicker">beta</div>
         <h3 class="card-title">小工具 · Bio Tools</h3>
         <p class="card-text">
-          把自己写过或正在写的实用脚本慢慢搬上来：GC 含量计算器、
-          序列翻译、标准曲线拟合……让实验和作业少算一点、少错一点。
+          把自己写过或正在写的实用脚本慢慢搬上来：从 DNA 序列简单分析开始，
+          未来可以扩展到 GC 含量、序列翻译、标准曲线拟合等。
         </p>
         <div class="card-meta">
-          <span>方向：JavaScript & Python 思路迁移</span>
-          <span>状态：构思中 · 将逐步上线</span>
+          <span>点击此卡片 · 打开 DNA 工具</span>
+          <span>状态：已上线第一个小工具</span>
         </div>
       </article>
 
@@ -583,6 +711,33 @@
     </div>
   </section>
 
+  <!-- DNA 序列分析弹窗 -->
+  <div class="modal-backdrop" id="tool-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <div>
+          <div class="modal-title">DNA 序列简单分析 · v1</div>
+          <div class="modal-subtitle">
+            在本地浏览器中完成，不会上传到服务器。支持 A / T / G / C / N。
+          </div>
+        </div>
+        <button class="modal-close tool-close" aria-label="关闭">×</button>
+      </div>
+      <form class="modal-body" id="dna-form">
+        <label for="dna-input">在此粘贴 DNA 序列（可包含换行和空格）：</label>
+        <textarea id="dna-input" placeholder="例如：&#10;ATGCGTACGTTAGC..."></textarea>
+        <div class="message" id="dna-message"></div>
+        <div class="result-box" id="dna-result">
+          结果会显示在这里：序列长度、A/T/G/C/N 计数，以及 GC 含量。
+        </div>
+        <div class="modal-footer">
+          <span>小提示：会自动忽略空格和换行；如包含其它字符会给出提醒。</span>
+          <button type="submit" class="btn btn-primary">分析序列</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <!-- Footer -->
   <footer class="footer">
     <div>© <span id="year"></span> Baibuye · BioInfo Playground</div>
@@ -590,14 +745,111 @@
   </footer>
 
   <script>
-    // 自动填充年份的小细节
+    // 自动填充年份
     document.getElementById("year").textContent = new Date().getFullYear();
+
+    // 打开 / 关闭 DNA 工具弹窗
+    const toolCard = document.getElementById("tool-card");
+    const toolModal = document.getElementById("tool-modal");
+    const closeButtons = document.querySelectorAll(".tool-close");
+
+    if (toolCard && toolModal) {
+      toolCard.addEventListener("click", () => {
+        toolModal.classList.add("open");
+      });
+
+      closeButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          toolModal.classList.remove("open");
+        });
+      });
+
+      // 点击遮罩空白区域也关闭
+      toolModal.addEventListener("click", (e) => {
+        if (e.target === toolModal) {
+          toolModal.classList.remove("open");
+        }
+      });
+    }
+
+    // DNA 序列分析逻辑
+    const dnaForm = document.getElementById("dna-form");
+    const dnaInput = document.getElementById("dna-input");
+    const dnaMessage = document.getElementById("dna-message");
+    const dnaResult = document.getElementById("dna-result");
+
+    if (dnaForm) {
+      dnaForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const raw = (dnaInput.value || "").trim();
+
+        dnaMessage.textContent = "";
+        if (!raw) {
+          dnaMessage.textContent = "请先粘贴一段 DNA 序列。";
+          dnaResult.textContent = "未检测到有效序列。";
+          return;
+        }
+
+        // 去掉空格、制表符、换行
+        const cleaned = raw.toUpperCase().replace(/[\s\r\n\t]/g, "");
+        if (!cleaned) {
+          dnaMessage.textContent = "清理空白字符后没有剩余内容，请检查输入。";
+          dnaResult.textContent = "未检测到有效序列。";
+          return;
+        }
+
+        // 检测非法字符
+        const invalidMatch = cleaned.match(/[^ACGTN]/g);
+        if (invalidMatch) {
+          const uniqueInvalid = [...new Set(invalidMatch)].join("、");
+          dnaMessage.textContent =
+            "提示：序列中包含非 A/T/G/C/N 字符（例如：" +
+            uniqueInvalid +
+            "），这些字符将被忽略后再计算。";
+        } else {
+          dnaMessage.textContent = "";
+        }
+
+        // 过滤掉非 A/T/G/C/N 做统计
+        const seq = cleaned.replace(/[^ACGTN]/g, "");
+        const length = seq.length;
+        if (!length) {
+          dnaResult.textContent =
+            "所有字符都是无效符号，未能得到合法的 A/T/G/C/N 碱基。";
+          return;
+        }
+
+        const counts = { A: 0, T: 0, G: 0, C: 0, N: 0 };
+        for (const base of seq) {
+          if (counts.hasOwnProperty(base)) {
+            counts[base] += 1;
+          }
+        }
+
+        const gcCount = counts.G + counts.C;
+        const gcPercent = ((gcCount / length) * 100).toFixed(2);
+
+        dnaResult.innerHTML =
+          "<strong>有效序列长度：</strong>" +
+          length +
+          " bp\n" +
+          "<strong>碱基计数：</strong>\n" +
+          "A: " +
+          counts.A +
+          "    T: " +
+          counts.T +
+          "    G: " +
+          counts.G +
+          "    C: " +
+          counts.C +
+          "    N: " +
+          counts.N +
+          "\n" +
+          "<strong>GC 含量：</strong>" +
+          gcPercent +
+          " % （按 G+C / 全部有效碱基 计算）";
+      });
+    }
   </script>
 </body>
 </html>
-
-
-
-
-
-
