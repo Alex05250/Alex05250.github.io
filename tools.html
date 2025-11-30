@@ -2,12 +2,10 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
-  <title>Tools · Baibuye BioInfo Playground</title>
+  <title>Tools · 小工具 · Baibuye BioInfo Playground</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Baibuye 的小工具：DNA 序列分析、进制互转等" />
-  <!-- 直接复用首页的 CSS，方便保持统一风格 -->
   <style>
-    /* == 把首页 index 的 CSS 复用过来（略同，不再解释） == */
     :root { --bg:#f5f5f7;--bg-elevated:#fff;--text:#1d1d1f;--muted:#6e6e73;--accent:#0071e3;--accent-soft:rgba(0,113,227,.09);--radius-lg:26px;--radius-md:18px;--shadow-soft:0 24px 60px rgba(0,0,0,.08);--border-subtle:rgba(0,0,0,.05);}
     *{box-sizing:border-box;margin:0;padding:0;}
     html{scroll-behavior:smooth;}
@@ -37,7 +35,7 @@
     .tool-panel textarea:focus,
     .tool-panel input:focus,
     .tool-panel select:focus{border-color:rgba(0,113,227,.7);box-shadow:0 0 0 1px rgba(0,113,227,.45);}
-    .tool-footer{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--muted);margin-top:4px;}
+    .tool-footer{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--muted);margin-top:4px;gap:8px;flex-wrap:wrap;}
     .btn{border:none;cursor:pointer;font-size:13px;border-radius:999px;padding:7px 16px;display:inline-flex;align-items:center;gap:6px;transition:transform .12s ease,box-shadow .18s ease,background .18s ease,color .18s ease,border-color .18s ease;text-decoration:none;}
     .btn-primary{background:linear-gradient(135deg,#0077ed,#0b84ff);color:#fff;box-shadow:0 12px 30px rgba(0,122,255,.35);}
     .btn-primary:hover{transform:translateY(-1px);box-shadow:0 16px 40px rgba(0,122,255,.42);}
@@ -64,6 +62,7 @@
         <a href="index.html#overview">Overview</a>
         <a href="tools.html">Tools</a>
         <a href="lab.html">Lab &amp; Projects</a>
+        <a href="daily.html">Daily</a>
       </nav>
       <div class="nav-cta">tools · dna · base</div>
     </div>
@@ -72,9 +71,14 @@
   <main class="section">
     <h1 class="section-title">Tools · 小工具</h1>
     <p class="section-subtitle">
-      这里收集一些我自己写的小程序：先从 DNA 序列简单分析、十进制 ↔ 二进制互转开始。
-      以后每新增一个工具，只需要复制下面其中一块 <code>.tool-block</code>，改标题和内容即可。
+      这里收集一些我自己写的小程序：DNA 序列简单分析、十进制 ↔ 二进制互转等。
     </p>
+    <!--
+      开发者提示：
+      以后如果要新增一个工具，可以在下面复制一整块
+      <section class="tool-block"> ... </section>，
+      改标题、简介和表单内容即可。
+    -->
 
     <!-- 工具 1：DNA 序列分析 -->
     <section class="tool-block">
@@ -113,9 +117,8 @@
         <span style="font-size:11px;color:var(--muted);">灵感来自早期 C++ 小程序</span>
       </div>
       <p class="tool-intro">
-        支持 0–4095 的十进制与 12 位二进制表示之间互转，逻辑对应你当初写的
+        支持 0–4095 的十进制与 12 位二进制表示之间互转，逻辑对应当初写的
         <code>std::bitset&lt;12&gt;</code> 程序。
-        如果你在仓库里放了 <code>base_converter.cpp</code>，也可以在这里附上“查看原始 C++ 实现”的链接。
       </p>
       <form class="tool-panel" id="base-form">
         <label for="base-mode">选择转换方向：</label>
@@ -132,22 +135,18 @@
           在这里会看到转换结果：十进制数值和 12 位二进制表示。
         </div>
         <div class="tool-footer">
-          <span>范围：0–4095；二进制仅允许 0 / 1，长度不超过 12 位。</span>
+          <span>范围：0–4095；二进制仅允许包含 0 / 1，长度不超过 12 位。</span>
           <button type="submit" class="btn btn-primary">开始转换</button>
         </div>
       </form>
-      <!-- 如果你上传了 base_converter.cpp，可以把下面这一行取消注释并改成你的链接 -->
-      <!-- <p style="font-size:11px;color:var(--muted);margin-top:6px;">
-        原始 C++ 实现：<a href="https://github.com/你的用户名/你的仓库名/blob/main/base_converter.cpp" target="_blank">查看源码</a>
-      </p> -->
+      <!--
+        如果你上传了 base_converter.cpp，可以在这里加链接，例如：
+        原始 C++ 实现：
+        <a href="https://github.com/你的用户名/你的仓库名/blob/main/base_converter.cpp" target="_blank" rel="noopener noreferrer">查看源码</a>
+      -->
     </section>
 
-    <!-- 以后新增工具：复制这一块 tool-block，改标题和内容就可以 -->
-    <!--
-    <section class="tool-block">
-      ... 新工具 ...
-    </section>
-    -->
+    <!-- 以后新增工具：复制这一块 tool-block 即可 -->
   </main>
 
   <footer class="footer">
@@ -232,7 +231,7 @@
       });
     }
 
-    // 进制互转逻辑（照你的 C++ 思路）
+    // 进制互转逻辑（对应你的 C++ 思路）
     const baseForm = document.getElementById("base-form");
     const baseMode = document.getElementById("base-mode");
     const baseInput = document.getElementById("base-input");
