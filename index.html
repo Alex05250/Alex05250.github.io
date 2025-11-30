@@ -392,45 +392,6 @@
       color: var(--muted);
     }
 
-    /* Roadmap */
-
-    .roadmap {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 18px;
-    }
-
-    .roadmap-item {
-      border-radius: var(--radius-md);
-      padding: 14px 14px 12px;
-      background: rgba(255, 255, 255, 0.9);
-      border: 1px solid var(--border-subtle);
-      font-size: 13px;
-    }
-
-    .roadmap-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 3px 8px;
-      border-radius: 999px;
-      background: rgba(0, 0, 0, 0.04);
-      font-size: 11px;
-      color: var(--muted);
-      margin-bottom: 6px;
-    }
-
-    .roadmap-title {
-      font-weight: 600;
-      margin-bottom: 4px;
-    }
-
-    .roadmap-status {
-      font-size: 11px;
-      color: var(--muted);
-      margin-top: 4px;
-    }
-
     /* Footer */
 
     .footer {
@@ -465,10 +426,6 @@
       .grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
-
-      .roadmap {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
     }
 
     @media (max-width: 600px) {
@@ -484,8 +441,7 @@
         padding-inline: 14px;
       }
 
-      .grid,
-      .roadmap {
+      .grid {
         grid-template-columns: minmax(0, 1fr);
       }
 
@@ -509,10 +465,7 @@
       </div>
       <nav class="nav-links">
         <a href="#home">Home</a>
-        <a href="#tools">Tools</a>
-        <a href="#notes">Notes</a>
-        <a href="#projects">Projects</a>
-        <a href="#roadmap">Roadmap</a>
+        <a href="#overview">Overview</a>
         <div class="nav-cta">student · bio · code</div>
       </nav>
     </div>
@@ -535,11 +488,11 @@
           还有一些对世界的好奇与思考。它不会一次成型，而是和我一起持续演化。
         </p>
         <div class="hero-actions">
-          <a href="#tools" class="btn btn-primary">
-            立即查看 · 小工具预览
+          <a href="#overview" class="btn btn-primary">
+            进入总览 · 三个板块
           </a>
-          <a href="#projects" class="btn btn-ghost">
-            浏览我的实验 & 项目
+          <a href="#overview" class="btn btn-ghost">
+            从每日分享开始逛逛
           </a>
         </div>
         <div class="hero-meta">
@@ -574,204 +527,59 @@
     </section>
   </main>
 
-  <!-- Tools 区 -->
-  <section id="tools" class="section">
+  <!-- Overview 区（原 Tools 区） -->
+  <section id="overview" class="section">
     <div class="section-header">
       <div>
-        <h2 class="section-title">Bio Tools · 小工具区</h2>
+        <h2 class="section-title">Overview · 总览</h2>
         <p class="section-subtitle">
-          未来这里会逐渐出现一些真正帮得上忙的小功能：
-          例如 GC 含量计算、序列翻译、浓度换算、线性回归拟合等。
+          用三个简单的板块，把日常的思考、实用的小工具、
+          和真正做过的实验 & 项目串在一起。以后如果需要，可以再把它们拆成独立页面。
         </p>
       </div>
     </div>
     <div class="grid">
+      <!-- 每日分享 -->
       <article class="card">
         <div class="card-kicker">planned</div>
-        <h3 class="card-title">GC 含量计算器</h3>
+        <h3 class="card-title">每日分享 · Daily Notes</h3>
         <p class="card-text">
-          输入 DNA 序列，快速计算 GC 比例。
-          未来将支持 FASTA 多序列统计与简单可视化。
+          用很短的篇幅记录一些灵感、读到的句子、课堂上的小发现，
+          可以是生物学相关，也可以是生活里突然闪现的想法。
         </p>
         <div class="card-meta">
-          <span>语言：JavaScript · Python 思路迁移</span>
-          <span>状态：待实现</span>
+          <span>形式：一两段文字 / 一张图</span>
+          <span>状态：计划中 · 将持续更新</span>
         </div>
       </article>
 
+      <!-- 小工具 -->
       <article class="card">
         <div class="card-kicker">planned</div>
-        <h3 class="card-title">序列翻译 · DNA → 氨基酸</h3>
+        <h3 class="card-title">小工具 · Bio Tools</h3>
         <p class="card-text">
-          将 DNA / mRNA 转为氨基酸序列，配合密码子表，
-          作为生物化学与分子生物学学习的小帮手。
+          把自己写过或正在写的实用脚本慢慢搬上来：GC 含量计算器、
+          序列翻译、标准曲线拟合……让实验和作业少算一点、少错一点。
         </p>
         <div class="card-meta">
-          <span>适用：基础教学 & 记忆强化</span>
-          <span>状态：构思中</span>
+          <span>方向：JavaScript & Python 思路迁移</span>
+          <span>状态：构思中 · 将逐步上线</span>
         </div>
       </article>
 
+      <!-- 实验 & 项目 -->
       <article class="card">
         <div class="card-kicker">planned</div>
-        <h3 class="card-title">实验数据 · 标准曲线拟合</h3>
+        <h3 class="card-title">实验 & 项目 · Lab & Projects</h3>
         <p class="card-text">
-          针对 DNS 法、双缩脲法等实验，
-          将标准溶液的吸光度数据拟合为线性方程，帮助快速计算样品含量。
+          记录真正做过的事情：过氧化氢酶活力测定、DNS 法还原糖实验、
+          草麻黄中麻黄碱的提取，和一些小型生信或创意项目。
         </p>
         <div class="card-meta">
-          <span>方向：生物化学实验计算</span>
-          <span>状态：later</span>
+          <span>内容：实验流程 · 结果 · 反思</span>
+          <span>状态：later · 视精力慢慢补全</span>
         </div>
       </article>
-    </div>
-  </section>
-
-  <!-- Notes 区 -->
-  <section id="notes" class="section">
-    <div class="section-header">
-      <div>
-        <h2 class="section-title">Knowledge Notes · 知识卡片</h2>
-        <p class="section-subtitle">
-          从庞杂的笔记与知识库里，挑出已经消化好的部分，用自己的话重新讲一遍。
-          它既是复习，也是向未来的自己解释当下的理解。
-        </p>
-      </div>
-    </div>
-    <div class="grid">
-      <article class="card">
-        <div class="card-kicker">biochemistry</div>
-        <h3 class="card-title">EMP 十步反应与能量收支</h3>
-        <p class="card-text">
-          从葡萄糖进入细胞开始，到生成丙酮酸的十步反应，
-          每一步的底物、酶、能量变化与调控要点。
-        </p>
-        <div class="card-meta">
-          <span>标签：代谢 · 能量转换</span>
-          <span>状态：待整理</span>
-        </div>
-      </article>
-
-      <article class="card">
-        <div class="card-kicker">lab basics</div>
-        <h3 class="card-title">SDS-PAGE 的原理小结</h3>
-        <p class="card-text">
-          SDS 如何“抹平”蛋白质本身的电荷与形状差异，
-          PAGE 凝胶如何按分子量分离，以及局部插值法估算分子量的思路。
-        </p>
-        <div class="card-meta">
-          <span>标签：电泳 · 蛋白质</span>
-          <span>状态：计划撰写</span>
-        </div>
-      </article>
-
-      <article class="card">
-        <div class="card-kicker">methods</div>
-        <h3 class="card-title">还原糖测定 · DNS 法摘要</h3>
-        <p class="card-text">
-          DNS 与还原糖的反应原理、标准曲线的构建、吸光度换算浓度，
-          以及常见误差来源与改进方向。
-        </p>
-        <div class="card-meta">
-          <span>标签：光谱分析 · 实验设计</span>
-          <span>状态：待填充</span>
-        </div>
-      </article>
-    </div>
-  </section>
-
-  <!-- Projects 区 -->
-  <section id="projects" class="section">
-    <div class="section-header">
-      <div>
-        <h2 class="section-title">Projects · 实验与小项目</h2>
-        <p class="section-subtitle">
-          这里会记录一些真正做过的事情：实验流程、数据分析、踩过的坑、
-          以及从中提炼出来的“以后要记得”的经验。
-        </p>
-      </div>
-    </div>
-    <div class="grid">
-      <article class="card">
-        <div class="card-kicker">wet lab</div>
-        <h3 class="card-title">过氧化氢酶活力的测定</h3>
-        <p class="card-text">
-          从叶片提取酶液，到通过滴定消耗的硫代硫酸钠体积计算酶活。
-          对照组存在的意义、国际酶活单位与常规计算的对比。
-        </p>
-        <div class="card-meta">
-          <span>进展：已完成实验 & 讨论</span>
-          <span>后续：整理成正式报告</span>
-        </div>
-      </article>
-
-      <article class="card">
-        <div class="card-kicker">bio-alkaloids</div>
-        <h3 class="card-title">草麻黄中麻黄碱的提取</h3>
-        <p class="card-text">
-          在安全与规范前提下，完成麻黄碱草酸盐的提取与结晶，
-          记录萃取、调 pH、减压浓缩等关键步骤。
-        </p>
-        <div class="card-meta">
-          <span>关注：提取率与安全合规</span>
-          <span>状态：已有初版报告</span>
-        </div>
-      </article>
-
-      <article class="card">
-        <div class="card-kicker">creative</div>
-        <h3 class="card-title">鲸已远去，云和光还在</h3>
-        <p class="card-text">
-          利用 AI 视频与文案创作的一次尝试。
-          从“雨林中飞向天空的鲸鱼”出发，把告别与光、云联系在一起。
-        </p>
-        <div class="card-meta">
-          <span>类型：视觉创作 · 文案</span>
-          <span>状态：已完成 · 可扩展</span>
-        </div>
-      </article>
-    </div>
-  </section>
-
-  <!-- Roadmap 区 -->
-  <section id="roadmap" class="section">
-    <div class="section-header">
-      <div>
-        <h2 class="section-title">Roadmap · 学习路线图</h2>
-        <p class="section-subtitle">
-          这是给自己看的长期路线草图：从扎实生物学基础，
-          到掌握 C++ / Python，再到真正能独立完成小型生信分析任务。
-        </p>
-      </div>
-    </div>
-    <div class="roadmap">
-      <div class="roadmap-item">
-        <div class="roadmap-tag">2025 · now</div>
-        <div class="roadmap-title">巩固生物基础 & 实验技能</div>
-        <div>
-          生物化学、动物学、植物学、遗传学等核心课程；
-          熟练掌握常见实验（电泳、酶活测定、光谱分析等）的原理与计算。
-        </div>
-        <div class="roadmap-status">状态：进行中 · 持续补全知识库</div>
-      </div>
-      <div class="roadmap-item">
-        <div class="roadmap-tag">2025–2026</div>
-        <div class="roadmap-title">C++ / Python 与计算思维</div>
-        <div>
-          在 learncpp.com 上打牢 C++ 基础；用 Python 完成若干小实战，
-          包括序列处理、实验数据分析、简单自动化脚本。
-        </div>
-        <div class="roadmap-status">状态：阶段性暂停 · 计划重新启动</div>
-      </div>
-      <div class="roadmap-item">
-        <div class="roadmap-tag">2026+ · 进一步</div>
-        <div class="roadmap-title">走向生物信息工程师</div>
-        <div>
-          学习比对算法、组装、注释、基因表达分析；
-          逐步接触真实数据集与分析流程，尝试独立完成一两个小课题。
-        </div>
-        <div class="roadmap-status">状态：在路上 · 允许自己慢慢来</div>
-      </div>
     </div>
   </section>
 
@@ -787,4 +595,6 @@
   </script>
 </body>
 </html>
+
+
 
