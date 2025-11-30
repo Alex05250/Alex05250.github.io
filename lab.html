@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title>Lab &amp; Projects · Baibuye BioInfo Playground</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Baibuye 的实验与项目记录" />
+  <style>
+    :root { --bg:#f5f5f7;--bg-elevated:#fff;--text:#1d1d1f;--muted:#6e6e73;--accent:#0071e3;--accent-soft:rgba(0,113,227,.09);--radius-lg:26px;--radius-md:18px;--shadow-soft:0 24px 60px rgba(0,0,0,.08);--border-subtle:rgba(0,0,0,.05);}
+    *{box-sizing:border-box;margin:0;padding:0;}
+    html{scroll-behavior:smooth;}
+    body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui,-system-ui,"Segoe UI",sans-serif;background:radial-gradient(circle at top left,#fff 0,#f5f5f7 45%,#ececf1 100%);color:var(--text);line-height:1.6;}
+    .nav{position:sticky;top:0;z-index:20;backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);background:linear-gradient(to bottom,rgba(245,245,247,.9),rgba(245,245,247,.75),rgba(245,245,247,.3));border-bottom:1px solid rgba(0,0,0,.06);}
+    .nav-inner{max-width:1080px;margin:0 auto;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:16px;}
+    .nav-brand{display:flex;align-items:center;gap:8px;font-size:15px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;}
+    .nav-dot{width:18px;height:18px;border-radius:999px;background:radial-gradient(circle at 30% 20%,#fff 0,#c8e3ff 35%,#0071e3 100%);box-shadow:0 0 0 1px rgba(0,113,227,.4),0 8px 24px rgba(0,113,227,.4);}
+    .nav-links{display:flex;gap:18px;font-size:14px;align-items:center;}
+    .nav-links a{text-decoration:none;color:var(--muted);padding:6px 10px;border-radius:999px;transition:color .18s ease,background-color .18s ease,transform .12s ease;}
+    .nav-links a:hover{color:var(--text);background:rgba(0,0,0,.03);transform:translateY(-1px);}
+    .nav-cta{padding:7px 14px;border-radius:999px;background:var(--accent-soft);color:var(--accent);font-size:12px;border:1px solid rgba(0,113,227,.18);white-space:nowrap;}
+    .section{max-width:1080px;margin:0 auto;padding:40px 20px 64px;}
+    .section-title{font-size:24px;font-weight:650;letter-spacing:-.02em;margin-bottom:6px;}
+    .section-subtitle{font-size:14px;color:var(--muted);max-width:520px;margin-bottom:24px;}
+    .project-block{border-radius:22px;background:rgba(255,255,255,.96);border:1px solid var(--border-subtle);box-shadow:0 18px 40px rgba(0,0,0,.06);padding:18px 18px 16px;margin-bottom:18px;}
+    .project-header{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:8px;}
+    .project-title{font-size:16px;font-weight:600;}
+    .project-tag{font-size:11px;text-transform:uppercase;letter-spacing:.18em;color:var(--muted);}
+    .project-intro{font-size:13px;color:var(--muted);margin-bottom:8px;}
+    .project-meta{font-size:11px;color:var(--muted);display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;}
+    .notes-block{border-radius:18px;background:rgba(255,255,255,.9);border:1px dashed rgba(0,0,0,.08);padding:14px 14px 12px;font-size:13px;color:var(--muted);margin-top:10px;}
+    .footer{max-width:1080px;margin:0 auto;padding:24px 20px 32px;font-size:12px;color:var(--muted);display:flex;justify-content:space-between;gap:12px;border-top:1px solid rgba(0,0,0,.06);}
+    @media (max-width:600px){
+      .nav-inner{padding-inline:14px;}
+      .nav-links{display:none;}
+      .section{padding-inline:14px;}
+    }
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="nav-inner">
+      <div class="nav-brand">
+        <div class="nav-dot"></div>
+        <span>Baibuye · BioInfo Playground</span>
+      </div>
+      <nav class="nav-links">
+        <a href="index.html#home">Home</a>
+        <a href="index.html#overview">Overview</a>
+        <a href="tools.html">Tools</a>
+        <a href="lab.html">Lab &amp; Projects</a>
+      </nav>
+      <div class="nav-cta">lab · experiments</div>
+    </div>
+  </header>
+
+  <main class="section">
+    <h1 class="section-title">Lab &amp; Projects · 实验与项目</h1>
+    <p class="section-subtitle">
+      用比较轻松的方式记录自己做过的实验、小项目和一些阶段性总结。
+      以后每新增一个项目，只需要复制一块 <code>.project-block</code>，改成对应的实验内容即可。
+    </p>
+
+    <!-- 实验 / 项目示例 1 -->
+    <section class="project-block">
+      <div class="project-header">
+        <div>
+          <div class="project-tag">BIOCHEM</div>
+          <div class="project-title">过氧化氢酶活力的测定（碘量法）</div>
+        </div>
+        <span style="font-size:11px;color:var(--muted);">
+          状态：已完成 · 待整理为正式报告
+        </span>
+      </div>
+      <p class="project-intro">
+        通过碘量法测定植物组织中过氧化氢酶（catalase）的活力，
+        计算单位时间内催化分解的 H<sub>2</sub>O<sub>2</sub> 量，并尝试用国际单位与常规单位两种方式表示。
+      </p>
+      <div class="project-meta">
+        <span>涉及：酶动力学 · 滴定分析 · 实验误差分析</span>
+        <span>计划：整理成知识库条目，用于以后查阅</span>
+      </div>
+    </section>
+
+    <!-- 实验 / 项目示例 2 -->
+    <section class="project-block">
+      <div class="project-header">
+        <div>
+          <div class="project-tag">CHEM &amp; PHYTO</div>
+          <div class="project-title">草麻黄中麻黄碱的提取与纯化</div>
+        </div>
+        <span style="font-size:11px;color:var(--muted);">
+          状态：已完成 · 报告已初稿
+        </span>
+      </div>
+      <p class="project-intro">
+        通过水浴回流、液液萃取、酸碱调节等步骤，从草麻黄中提取麻黄碱的草酸盐，
+        初步体验旋转蒸发仪、分液漏斗等仪器的使用与注意事项。
+      </p>
+      <div class="project-meta">
+        <span>涉及：生物碱提取 · 有机溶剂萃取 · 安全规范</span>
+        <span>备注：内容已部分写入知识库</span>
+      </div>
+    </section>
+
+    <!-- 在这里复制新的 project-block -->
+    <!--
+    <section class="project-block">
+      <div class="project-header">
+        <div>
+          <div class="project-tag">标签</div>
+          <div class="project-title">实验或项目标题</div>
+        </div>
+        <span style="font-size:11px;color:var(--muted);">状态：进行中 / 已完成</span>
+      </div>
+      <p class="project-intro">
+        一两句话介绍这个实验或项目：做了什么、为什么做、想解决什么问题。
+      </p>
+      <div class="project-meta">
+        <span>涉及：相关知识点</span>
+        <span>备注：是否已写入知识库 / 是否打算扩展</span>
+      </div>
+    </section>
+    -->
+
+    <!-- 简单的“每日分享”占位区 -->
+    <section id="notes" class="notes-block">
+      <strong>Daily Notes · 每日分享（占位）</strong><br />
+      这里将来可以放一些碎片化的记录：一句话感悟、看到的有趣知识、课堂上的小发现……<br />
+      目前先当作草稿区域，等你有了几条内容以后，再决定要不要单独开一个页面。
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div>© <span id="year"></span> Baibuye · BioInfo Playground</div>
+    <div>Lab &amp; Projects 页面 · 记录真实做过的事情</div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
