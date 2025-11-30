@@ -27,7 +27,6 @@
     .project-tag{font-size:11px;text-transform:uppercase;letter-spacing:.18em;color:var(--muted);}
     .project-intro{font-size:13px;color:var(--muted);margin-bottom:8px;}
     .project-meta{font-size:11px;color:var(--muted);display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;}
-    .notes-block{border-radius:18px;background:rgba(255,255,255,.9);border:1px dashed rgba(0,0,0,.08);padding:14px 14px 12px;font-size:13px;color:var(--muted);margin-top:10px;}
     .footer{max-width:1080px;margin:0 auto;padding:24px 20px 32px;font-size:12px;color:var(--muted);display:flex;justify-content:space-between;gap:12px;border-top:1px solid rgba(0,0,0,.06);}
     @media (max-width:600px){
       .nav-inner{padding-inline:14px;}
@@ -48,6 +47,7 @@
         <a href="index.html#overview">Overview</a>
         <a href="tools.html">Tools</a>
         <a href="lab.html">Lab &amp; Projects</a>
+        <a href="daily.html">Daily</a>
       </nav>
       <div class="nav-cta">lab · experiments</div>
     </div>
@@ -57,10 +57,15 @@
     <h1 class="section-title">Lab &amp; Projects · 实验与项目</h1>
     <p class="section-subtitle">
       用比较轻松的方式记录自己做过的实验、小项目和一些阶段性总结。
-      以后每新增一个项目，只需要复制一块 <code>.project-block</code>，改成对应的实验内容即可。
     </p>
+    <!--
+      开发者提示：
+      新增实验 / 项目时，可以在下面复制一块
+      <section class="project-block"> ... </section>，
+      改成对应内容即可。
+    -->
 
-    <!-- 实验 / 项目示例 1 -->
+    <!-- 实验示例 1 -->
     <section class="project-block">
       <div class="project-header">
         <div>
@@ -81,7 +86,7 @@
       </div>
     </section>
 
-    <!-- 实验 / 项目示例 2 -->
+    <!-- 实验示例 2 -->
     <section class="project-block">
       <div class="project-header">
         <div>
@@ -102,32 +107,7 @@
       </div>
     </section>
 
-    <!-- 在这里复制新的 project-block -->
-    <!--
-    <section class="project-block">
-      <div class="project-header">
-        <div>
-          <div class="project-tag">标签</div>
-          <div class="project-title">实验或项目标题</div>
-        </div>
-        <span style="font-size:11px;color:var(--muted);">状态：进行中 / 已完成</span>
-      </div>
-      <p class="project-intro">
-        一两句话介绍这个实验或项目：做了什么、为什么做、想解决什么问题。
-      </p>
-      <div class="project-meta">
-        <span>涉及：相关知识点</span>
-        <span>备注：是否已写入知识库 / 是否打算扩展</span>
-      </div>
-    </section>
-    -->
-
-    <!-- 简单的“每日分享”占位区 -->
-    <section id="notes" class="notes-block">
-      <strong>Daily Notes · 每日分享（占位）</strong><br />
-      这里将来可以放一些碎片化的记录：一句话感悟、看到的有趣知识、课堂上的小发现……<br />
-      目前先当作草稿区域，等你有了几条内容以后，再决定要不要单独开一个页面。
-    </section>
+    <!-- 以后新增项目：在这里复制新的 project-block -->
   </main>
 
   <footer class="footer">
