@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <title>线性回归小工具 | Baibuye</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+        /* ===== 基础样式，尽量简洁，方便以后按你的网站风格调整 ===== */
+        :root {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+            background: #f5f7fb;
+            color: #222;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 24px 24px 32px;
+            box-shadow: 0 12px 30px rgba(15, 35, 95, 0.12);
+        }
+
+        h1 {
+            margin: 0 0 4px;
+            font-size: 1.8rem;
+        }
+
+        .subtitle {
+            margin: 0 0 20px;
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.2fr);
+            gap: 20px;
+        }
+
+        @media (max-width: 800px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .panel {
+            border-radius: 12px;
+            padding: 16px 16px 18px;
+            background: #f9fafc;
+            border: 1px solid #e0e6f3;
+        }
+
+        .panel h2 {
+            margin-top: 0;
+            font-size: 1.1rem;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 220px;
+            resize: vertical;
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 1px solid #cfd5e6;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            font-size: 0.9rem;
+            box-sizing: border-box;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.15);
+        }
+
+        .buttons {
+            margin-top: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        button {
+            border: none;
+            border-radius: 999px;
+            padding: 6px 14px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            background: #4f46e5;
+            color: white;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        button.secondary {
+            background: #e4e7f5;
+            color: #333;
+        }
+
+        button.danger {
+            background: #f97373;
+            color: #fff;
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: default;
+        }
+
+        .hint {
+            margin-top: 8px;
+            font-size: 0.8rem;
+            color: #777;
+            line-height: 1.4;
+        }
+
+        .hint code {
+            background: #eef1fb;
+            padding: 1px 4px;
+            border-radius: 4px;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        }
+
+        .result-block {
+            font-size: 0.92rem;
+            line-height: 1.6;
+        }
+
+        .result-block .equation {
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 6px;
+        }
+
+        .result-block .kv {
+            margin: 2px 0;
+        }
+
+        .result-block .kv span.label {
+            color: #555;
+        }
+
+        .result-block .kv span.value {
+            font-weight: 500;
+        }
+
+        .error {
+            margin-top: 8px;
+            padding: 8px 10px;
+            border-radius: 8px;
+            background: #fef2f2;
+            color: #b91c1c;
+            font-size: 0.85rem;
+        }
+
+        .ok-msg {
+            margin-top: 8px;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: #ecfdf5;
+            color: #166534;
+            font-size: 0.78rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        canvas {
+            width: 100%;
+            max-width: 520px;
+            height: 320px;
+            border-radius: 12px;
+            background: #ffffff;
+            border: 1px solid #e0e6f3;
+            margin-top: 10px;
+        }
+
+        .footer-note {
+            margin-top: 20px;
+            font-size: 0.78rem;
+            color: #888;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>线性回归小工具</h1>
+    <p class="subtitle">
+        快速拟合一条直线：输入一组 (x, y) 数据点，计算斜率、截距、相关系数 r 和决定系数 R²，并画出简单示意图。
+    </p>
+
+    <div class="grid">
+        <!-- 左侧：数据输入 -->
+        <div class="panel">
+            <h2>① 输入数据</h2>
+            <textarea id="data-input" placeholder="每一行一组数据，例如：
+1, 2.1
+2, 3.9
+3, 6.2
+4, 7.9"></textarea>
+
+            <div class="buttons">
+                <button id="fit-btn">开始拟合</button>
+                <button id="sample-btn" class="secondary">填入示例数据</button>
+                <button id="clear-btn" class="danger">清空</button>
+            </div>
+
+            <div class="hint">
+                支持以下几种分隔方式：
+                <code>1, 2.1</code>、
+                <code>1 2.1</code>、
+                <code>1&nbsp;&nbsp;&nbsp;2.1</code> 等。<br />
+                至少需要两行有效数据，且 <code>x</code> 不能全部相同。
+            </div>
+
+            <div id="input-error" class="error" style="display:none;"></div>
+            <div id="ok-msg" class="ok-msg" style="display:none;">✅ 数据解析成功，可以开始拟合。</div>
+        </div>
+
+        <!-- 右侧：结果 + 图像 -->
+        <div class="panel">
+            <h2>② 拟合结果 & 图像</h2>
+            <div id="result" class="result-block">
+                <p style="color:#888;font-size:0.86rem;">
+                    还没有结果。请输入数据并点击<span style="font-weight:600;">“开始拟合”</span>。
+                </p>
+            </div>
+            <canvas id="plot" width="520" height="320"></canvas>
+        </div>
+    </div>
+
+    <div class="footer-note">
+        小工具原理：最小二乘法线性回归（y = a·x + b），r、R² 计算与统计学标准公式一致。
+    </div>
+</div>
+
+<script>
+    // ===== 简单线性回归核心：最小二乘法 =====
+    function computeLinearRegression(xs, ys) {
+        const n = xs.length;
+        if (n < 2) {
+            throw new Error("至少需要 2 个数据点才能拟合直线。");
+        }
+
+        let sumX = 0, sumY = 0;
+        for (let i = 0; i < n; i++) {
+            sumX += xs[i];
+            sumY += ys[i];
+        }
+        const meanX = sumX / n;
+        const meanY = sumY / n;
+
+        let sxx = 0, syy = 0, sxy = 0;
+        for (let i = 0; i < n; i++) {
+            const dx = xs[i] - meanX;
+            const dy = ys[i] - meanY;
+            sxx += dx * dx;
+            syy += dy * dy;
+            sxy += dx * dy;
+        }
+
+        if (sxx === 0) {
+            throw new Error("所有 x 值都相同，无法拟合 y = a·x + b 形式的函数。");
+        }
+
+        const a = sxy / sxx;        // 斜率
+        const b = meanY - a * meanX; // 截距
+
+        // 相关系数 r 与决定系数 R^2
+        let r, r2;
+        if (syy === 0) {
+            // 所有 y 相同，理论上也是完美线性关系（水平直线）
+            r2 = 1;
+            r = a >= 0 ? 1 : -1;
+        } else {
+            r = sxy / Math.sqrt(sxx * syy);
+            r2 = r * r;
+        }
+
+        return { a, b, r, r2, meanX, meanY };
+    }
+
+    // ===== 简单解析输入文本为 [xs[], ys[]] =====
+    function parseInput(text) {
+        const lines = text.split(/\r?\n/);
+        const xs = [];
+        const ys = [];
+        const errors = [];
+
+        lines.forEach((rawLine, idx) => {
+            const line = rawLine.trim();
+            if (!line) return; // 跳过空行
+
+            // 用逗号 / 空格 / 制表符 作为分隔
+            const parts = line.split(/[,，\s]+/).filter(Boolean);
+            if (parts.length < 2) {
+                errors.push(`第 ${idx + 1} 行缺少 y 值：${line}`);
+                return;
+            }
+
+            const x = parseFloat(parts[0]);
+            const y = parseFloat(parts[1]);
+
+            if (!Number.isFinite(x) || !Number.isFinite(y)) {
+                errors.push(`第 ${idx + 1} 行无法解析为数字：${line}`);
+                return;
+            }
+
+            xs.push(x);
+            ys.push(y);
+        });
+
+        if (xs.length === 0) {
+            errors.push("没有读到任何有效的 (x, y) 数据。");
+        }
+
+        return { xs, ys, errors };
+    }
+
+    // ===== 绘图：将点与拟合直线画在 canvas 上 =====
+    function drawPlot(xs, ys, a, b) {
+        const canvas = document.getElementById("plot");
+        const ctx = canvas.getContext("2d");
+
+        const width = canvas.width;
+        const height = canvas.height;
+        const padding = 40;
+
+        // 清空画布
+        ctx.clearRect(0, 0, width, height);
+
+        if (xs.length === 0) return;
+
+        let minX = Math.min(...xs);
+        let maxX = Math.max(...xs);
+        let minY = Math.min(...ys);
+        let maxY = Math.max(...ys);
+
+        // 给坐标轴稍微留一点富余
+        if (minX === maxX) {
+            minX -= 1;
+            maxX += 1;
+        } else {
+            const dx = (maxX - minX) * 0.05;
+            minX -= dx;
+            maxX += dx;
+        }
+        if (minY === maxY) {
+            minY -= 1;
+            maxY += 1;
+        } else {
+            const dy = (maxY - minY) * 0.1;
+            minY -= dy;
+            maxY += dy;
+        }
+
+        function toCanvasX(x) {
+            return padding + (x - minX) * (width - 2 * padding) / (maxX - minX);
+        }
+
+        function toCanvasY(y) {
+            return height - padding - (y - minY) * (height - 2 * padding) / (maxY - minY);
+        }
+
+        // 画坐标轴
+        ctx.strokeStyle = "#cbd5f5";
+        ctx.lineWidth = 1;
+
+        // x 轴
+        ctx.beginPath();
+        ctx.moveTo(padding, height - padding);
+        ctx.lineTo(width - padding, height - padding);
+        ctx.stroke();
+
+        // y 轴
+        ctx.beginPath();
+        ctx.moveTo(padding, padding);
+        ctx.lineTo(padding, height - padding);
+        ctx.stroke();
+
+        // 简单刻度和文字（只画 x_min/x_max, y_min/y_max）
+        ctx.fillStyle = "#888";
+        ctx.font = "10px system-ui";
+
+        ctx.fillText(minX.toFixed(2), padding - 10, height - padding + 12);
+        ctx.fillText(maxX.toFixed(2), width - padding - 20, height - padding + 12);
+        ctx.fillText(minY.toFixed(2), padding - 36, height - padding + 3);
+        ctx.fillText(maxY.toFixed(2), padding - 36, padding + 3);
+
+        // 画数据点
+        ctx.fillStyle = "#4f46e5";
+        for (let i = 0; i < xs.length; i++) {
+            const cx = toCanvasX(xs[i]);
+            const cy = toCanvasY(ys[i]);
+            ctx.beginPath();
+            ctx.arc(cx, cy, 3, 0, Math.PI * 2);
+            ctx.fill();
+        }
+
+        // 画拟合直线（用当前 x 范围的两端）
+        const x1 = minX;
+        const y1 = a * x1 + b;
+        const x2 = maxX;
+        const y2 = a * x2 + b;
+
+        ctx.strokeStyle = "#f97316";
+        ctx.lineWidth = 2;
+
+        ctx.beginPath();
+        ctx.moveTo(toCanvasX(x1), toCanvasY(y1));
+        ctx.lineTo(toCanvasX(x2), toCanvasY(y2));
+        ctx.stroke();
+    }
+
+    // ===== 绑定事件 =====
+    const inputEl = document.getElementById("data-input");
+    const resultEl = document.getElementById("result");
+    const errorEl = document.getElementById("input-error");
+    const okMsgEl = document.getElementById("ok-msg");
+
+    const fitBtn = document.getElementById("fit-btn");
+    const sampleBtn = document.getElementById("sample-btn");
+    const clearBtn = document.getElementById("clear-btn");
+
+    function showError(msg) {
+        errorEl.style.display = "block";
+        errorEl.textContent = msg;
+        okMsgEl.style.display = "none";
+    }
+
+    function showOk(msg) {
+        errorEl.style.display = "none";
+        if (msg) {
+            okMsgEl.textContent = msg;
+        }
+        okMsgEl.style.display = "inline-flex";
+    }
+
+    // 主按钮：开始拟合
+    fitBtn.addEventListener("click", () => {
+        const text = inputEl.value;
+        const { xs, ys, errors } = parseInput(text);
+
+        if (errors.length > 0) {
+            showError(errors.join("；"));
+            resultEl.innerHTML = `<p style="color:#888;font-size:0.86rem;">请先修正数据输入。</p>`;
+            drawPlot([], [], 0, 0);
+            return;
+        } else {
+            showOk("✅ 数据解析成功，已完成拟合。");
+        }
+
+        try {
+            const { a, b, r, r2, meanX, meanY } = computeLinearRegression(xs, ys);
+
+            const aStr = a.toFixed(4);
+            const bStr = b.toFixed(4);
+            const rStr = r.toFixed(4);
+            const r2Str = r2.toFixed(4);
+
+            const sign = b >= 0 ? "+" : "−";
+            const absB = Math.abs(b).toFixed(4);
+
+            resultEl.innerHTML = `
+                <div class="equation">拟合直线：<code>y = ${aStr} · x ${sign} ${absB}</code></div>
+                <div class="kv"><span class="label">斜率 a：</span><span class="value">${aStr}</span></div>
+                <div class="kv"><span class="label">截距 b：</span><span class="value">${bStr}</span></div>
+                <div class="kv"><span class="label">相关系数 r：</span><span class="value">${rStr}</span></div>
+                <div class="kv"><span class="label">决定系数 R²：</span><span class="value">${r2Str}</span></div>
+                <div class="kv"><span class="label">x 平均值：</span><span class="value">${meanX.toFixed(4)}</span></div>
+                <div class="kv"><span class="label">y 平均值：</span><span class="value">${meanY.toFixed(4)}</span></div>
+                <p style="margin-top:8px;font-size:0.83rem;color:#666;">
+                    提示：|r| 越接近 1，线性相关越强；R² 越接近 1，说明直线对数据的解释程度越好。
+                </p>
+            `;
+
+            drawPlot(xs, ys, a, b);
+        } catch (e) {
+            showError(e.message);
+            resultEl.innerHTML = `<p style="color:#888;font-size:0.86rem;">拟合失败：${e.message}</p>`;
+            drawPlot([], [], 0, 0);
+        }
+    });
+
+    // 填入示例数据
+    sampleBtn.addEventListener("click", () => {
+        const sample = [
+            "1, 2.1",
+            "2, 4.0",
+            "3, 5.8",
+            "4, 7.9",
+            "5, 10.1"
+        ].join("\n");
+        inputEl.value = sample;
+        showOk("✅ 已填入示例数据，点击“开始拟合”查看结果。");
+        resultEl.innerHTML = `<p style="color:#888;font-size:0.86rem;">示例数据已填入，请点击“开始拟合”。</p>`;
+        drawPlot([], [], 0, 0);
+    });
+
+    // 清空
+    clearBtn.addEventListener("click", () => {
+        inputEl.value = "";
+        resultEl.innerHTML = `<p style="color:#888;font-size:0.86rem;">
+            数据已清空。请输入新的 (x, y) 数据并点击“开始拟合”。
+        </p>`;
+        errorEl.style.display = "none";
+        okMsgEl.style.display = "none";
+        drawPlot([], [], 0, 0);
+    });
+</script>
+</body>
+</html>
